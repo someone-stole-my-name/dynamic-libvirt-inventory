@@ -1,0 +1,2 @@
+libvirt-python==6.1.0
+pkg-resources==0.0.0
