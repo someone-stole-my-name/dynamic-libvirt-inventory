@@ -3,8 +3,8 @@ import libvirt
 import sys
 import os
 
-IFACE_EXCLUDE = ['lo']
-LIBVIRT = "qemu+ssh://kvm-local/system"
+IFACE_EXCLUDE = ['lo','docker0']
+LIBVIRT = "qemu+ssh://kvm-local-direct/system"
 
 class suppress_stdout_stderr(object):
     def __enter__(self):
