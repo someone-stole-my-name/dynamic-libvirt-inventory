@@ -3,7 +3,7 @@ import libvirt
 import sys
 import os
 
-IFACE_EXCLUDE = ['lo','docker0']
+IFACE_EXCLUDE = ['lo','docker0','veth']
 LIBVIRT = "qemu+ssh://kvm-local-direct/system"
 
 class suppress_stdout_stderr(object):
@@ -91,7 +91,9 @@ for vm in conn.listAllDomains():
         finally:
             no_output.__exit__()
             for iface in ifaces:
-                if iface and iface not in IFACE_EXCLUDE:
+                if iface:
+                    if any(k in iface for k in IFACE_EXCLUDE):
+                        continue
                     inventory.add_host(vm.name(),ifaces[iface]['addrs'][0]['addr'],[vm.name().rsplit('-', 1)[0]])
 print(inventory.dump())
 
